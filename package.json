@@ -1,8 +1,8 @@
 {
-  "name": "dboard",
+  "name": "retroboard",
   "version": "0.0.1",
   "private": true,
-  "homepage": "https://mauriciomelo.github.io/dboard",
+  "homepage": "https://retroboard.github.io/board",
   "dependencies": {
     "babel-polyfill": "^6.26.0",
     "ipfs-pubsub-room": "^1.1.5",
