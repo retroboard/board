@@ -22,7 +22,6 @@
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "format": "prettier --write */**/*.js",
-    "prelint": "npm run format",
     "lint": "eslint --ignore-path .gitignore . --fix",
     "eject": "react-scripts eject"
   },
