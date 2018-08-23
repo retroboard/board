@@ -2,23 +2,56 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9.1
-
-    working_directory: ~/repo
+      - image: circleci/node:8.9.4
 
     steps:
       - checkout
-
       - restore_cache:
           keys:
           - v1-dependencies-{{ checksum "package.json" }}
           - v1-dependencies-
 
-      - run: npm install
+      - run:
+          name: "Install Dependencies"
+          command: npm install && npm install -g depcheck
 
       - save_cache:
           paths:
             - node_modules
           key: v1-dependencies-{{ checksum "package.json" }}
 
-      - run: npm run lint
+      - run:
+          name: "Build Assets"
+          command:
+            npm run build
+      - persist_to_workspace:
+          root: /home/circleci
+          paths:
+            - project
+
+  run-checks:
+      docker:
+        - image: circleci/node:8.9.4
+
+      steps:
+        - attach_workspace:
+            at: /home/circleci
+
+        - run:
+            name: "Run Checks"
+            command: |
+              mkdir ~/artifacts
+              npm run lint
+              depcheck
+              
+        - store_artifacts:
+            path: ~/artifacts/
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build
+      - run-checks:
+          requires:
+            - build
