@@ -13,7 +13,8 @@ jobs:
 
       - run:
           name: "Install Dependencies"
-          command: npm install && npm install -g depcheck
+          command: |
+            npm install
 
       - save_cache:
           paths:
@@ -42,16 +43,33 @@ jobs:
             command: |
               mkdir ~/artifacts
               npm run lint
-              depcheck
-              
+
+        - store_artifacts:
+            path: ~/artifacts/
+  run-tests:
+      docker:
+        - image: circleci/node:8.9.4
+
+      steps:
+        - attach_workspace:
+            at: /home/circleci
+
+        - run:
+            name: "Run Tests"
+            command: |
+              mkdir ~/artifacts
+              npm run test
+
         - store_artifacts:
             path: ~/artifacts/
 
 workflows:
   version: 2
-  main:
+  build-check-test:
     jobs:
       - build
-      - run-checks:
+      - run-checks
+      - run-tests:
           requires:
             - build
+            - run-tests
