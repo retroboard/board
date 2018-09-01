@@ -8,7 +8,7 @@ export const Main = () => (
   <HashRouter>
     <Switch>
       <Route exact path="/" component={Home} />
-      <Route path="/board/:hash" component={Board} />
+      <Route path="/board/:hash" component={(props) => <Board key={props.match.params.hash} {...props} />} />
     </Switch>
   </HashRouter>
 );
