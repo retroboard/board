@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from 'material-ui/TextField';
-import dbService from './dbService';
+import ipfsService from './ipfsService';
+import postsService from './postsService';
 
 class Board extends React.Component {
   state = {
@@ -9,8 +10,14 @@ class Board extends React.Component {
     post: { text: '' },
   };
 
-  async componentDidMount() {
-    this.service = await dbService.getInstance(this.props.match.params.hash);
+  componentWillMount() {
+    this.loadPosts();
+  }
+
+  async loadPosts() {
+    const hash = this.props.match.params.hash;
+    const node = await ipfsService.getInstance();
+    this.service = await postsService(hash, node);
 
     this.service.posts.subscribe(posts => {
       this.setState({ posts });
