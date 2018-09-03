@@ -1,15 +1,14 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Button from 'material-ui/Button';
-import dbService from './dbService';
 import { Redirect } from 'react-router-dom';
+import uuid from 'uuid/v4';
 
 class Home extends React.Component {
   state = {};
 
-  handleCreate = async () => {
-    const created = await dbService.createInstance();
-    this.setState({ created });
+  handleCreate = () => {
+    this.setState({ created: uuid() });
   };
 
   render() {
