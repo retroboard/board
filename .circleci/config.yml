@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:8.9.4
+    working_directory: ~/board
 
     steps:
       - checkout
@@ -30,6 +31,7 @@ jobs:
   run-checks:
       docker:
         - image: circleci/node:8.9.4
+      working_directory: ~/board
 
       steps:
         - attach_workspace:
@@ -45,6 +47,8 @@ jobs:
   run-tests:
       docker:
         - image: circleci/node:8.9.4
+      working_directory: ~/board
+
       steps:
         - attach_workspace:
             at: /home/circleci
