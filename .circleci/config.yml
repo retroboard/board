@@ -59,15 +59,3 @@ jobs:
               npm run test
         - store_artifacts:
             path: ~/artifacts/
-
-workflows:
-  version: 2
-  build-check-test:
-    jobs:
-      - build
-      - run-checks:
-          requeires:
-            - build
-      - run-tests:
-          requires:
-            - run-checks
