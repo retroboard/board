@@ -1,8 +1,24 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import TextField from 'material-ui/TextField';
+import TextField from '@material-ui/core/TextField';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Typography from '@material-ui/core/Typography';
 import ipfsService from './ipfsService';
 import postsService from './postsService';
+import { withStyles } from '@material-ui/core/styles';
+
+const styles = {
+  list: {
+    maxWidth: '400px',
+  },
+  card: {
+    minHeight: '80px',
+    width: '100%',
+  },
+};
 
 class Board extends React.Component {
   state = {
@@ -10,7 +26,7 @@ class Board extends React.Component {
     post: { text: '' },
   };
 
-  componentWillMount() {
+  componentDidMount() {
     this.loadPosts();
   }
 
@@ -41,6 +57,7 @@ class Board extends React.Component {
   };
 
   render() {
+    const { classes } = this.props;
     return (
       <div>
         <form onSubmit={this.handleSubmit} noValidate autoComplete="off">
@@ -53,9 +70,17 @@ class Board extends React.Component {
           />
         </form>
 
-        <ul>
-          {this.state.posts.map(post => <li key={post._id}>{post.text}</li>)}
-        </ul>
+        <List className={classes.list}>
+          {this.state.posts.map(post => (
+            <ListItem key={post._id}>
+              <Card className={classes.card}>
+                <CardContent>
+                  <Typography>{post.text}</Typography>
+                </CardContent>
+              </Card>
+            </ListItem>
+          ))}
+        </List>
       </div>
     );
   }
@@ -63,6 +88,7 @@ class Board extends React.Component {
 
 Board.propTypes = {
   match: PropTypes.object.isRequired,
+  classes: PropTypes.object
 };
 
-export default Board;
+export default withStyles(styles)(Board);

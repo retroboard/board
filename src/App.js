@@ -1,10 +1,11 @@
+import 'typeface-roboto';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withStyles } from 'material-ui/styles';
-import CssBaseline from 'material-ui/CssBaseline';
+import { withStyles } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
 import { Main } from './Main';
-import { MuiThemeProvider, createMuiTheme } from 'material-ui/styles';
-import red from 'material-ui/colors/red';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import red from '@material-ui/core/colors/red';
 
 import './App.css';
 
