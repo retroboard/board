@@ -8,20 +8,18 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          keys:
-          - v1-dependencies-{{ checksum "package.json" }}
-          - v1-dependencies-
+          key: npm-dependencies-{{ checksum "package.json" }}
       - run:
           name: "Install Dependencies"
           command: |
             npm install
       - save_cache:
+          key: npm-dependencies-{{ checksum "package.json" }}
           paths:
             - node_modules
-          key: v1-dependencies-{{ checksum "package.json" }}
       - run:
-          name: "Run checks and tests"
-          command: |
-            npm run lint
-            npm run test
-
+          name: "Run Checks"
+          command: npm run lint
+      - run:
+          name: "Run Tests"
+          command: npm run test
