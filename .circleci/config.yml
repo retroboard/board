@@ -21,5 +21,8 @@ jobs:
           name: "Run Checks"
           command: npm run lint
       - run:
+          name: "Vulnerability Checks"
+          command: npm audit
+      - run:
           name: "Run Tests"
           command: npm run test
