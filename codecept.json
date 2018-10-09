@@ -8,7 +8,9 @@
       "show": false
     }
   },
-  "include": {},
+  "include": {
+    "I": "./Y"
+  },
   "bootstrap": false,
   "mocha": {},
   "name": "board",
