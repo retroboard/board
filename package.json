@@ -6,6 +6,7 @@
   "dependencies": {
     "@material-ui/core": "^3.0.2",
     "babel-polyfill": "^6.26.0",
+    "codeceptjs": "^1.4.2",
     "orbit-db": "^0.19.9",
     "prop-types": "^15.6.1",
     "ramda": "^0.25.0",
@@ -29,7 +30,8 @@
   },
   "devDependencies": {
     "gh-pages": "^1.1.0",
-    "prettier": "1.11.1"
+    "prettier": "1.11.1",
+    "puppeteer": "^1.9.0"
   },
   "engines": {
     "node": "ˆ10.11"

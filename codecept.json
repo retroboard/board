@@ -1,0 +1,16 @@
+{
+  "tests": "Feature_Tests/*_test.js",
+  "timeout": 10000,
+  "output": "./output",
+  "helpers": {
+    "Puppeteer": {
+      "url": "http://localhost",
+      "show": false
+    }
+  },
+  "include": {},
+  "bootstrap": false,
+  "mocha": {},
+  "name": "board",
+  "translation": "pt-BR"
+}
