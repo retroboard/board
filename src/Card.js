@@ -16,6 +16,26 @@ const styles = {
     minHeight: '80px',
     width: '100%',
   },
+  content: {
+    paddingBottom: 0,
+  },
+  header: {
+    paddingBottom: 0,
+    position: 'absolute',
+    right: '15px',
+    top: '-2px',
+  },
+  textField: {
+    margin: 0,
+    width: '100%',
+  },
+  editIcon: {
+    fontSize: 14,
+  },
+  actionButton: {
+    fontSize: '.5em',
+    minHeight: '0',
+  },
 };
 
 class Card extends React.Component {
@@ -42,26 +62,29 @@ class Card extends React.Component {
 
   handleCancel = () => {
     this.setState({ isEditing: false });
-  }
+  };
 
   render() {
     const { post, classes } = this.props;
 
     return (
       <MCard className={classes.container}>
-        <CardHeader
-          action={
-            <IconButton
-              className={classes.edit}
-              aria-label="Edit"
-              data-automation="editButton"
-              onClick={this.enterEditMode}
-            >
-              <Edit />
-            </IconButton>
-          }
-        />
-        <CardContent>
+        {!this.state.isEditing && (
+          <CardHeader
+            className={classes.header}
+            action={
+              <IconButton
+                className={classes.edit}
+                aria-label="Edit"
+                data-automation="editButton"
+                onClick={this.enterEditMode}
+              >
+                <Edit className={classes.editIcon} />
+              </IconButton>
+            }
+          />
+        )}
+        <CardContent className={classes.content}>
           {!this.state.isEditing && (
             <Typography data-automation="text">{post.text}</Typography>
           )}
@@ -81,19 +104,20 @@ class Card extends React.Component {
         {this.state.isEditing && (
           <CardActions>
             <Button
-              size="small"
-              onClick={this.handleSave}
-              data-automation="saveButton"
-            >
-              Save
-            </Button>
-
-            <Button
-              size="small"
+              className={classes.actionButton}
               onClick={this.handleCancel}
               data-automation="cancel"
             >
               Cancel
+            </Button>
+
+            <Button
+              className={classes.actionButton}
+              onClick={this.handleSave}
+              color="primary"
+              data-automation="saveButton"
+            >
+              Save
             </Button>
           </CardActions>
         )}
