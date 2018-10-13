@@ -40,6 +40,10 @@ class Card extends React.Component {
     this.setState({ newText });
   };
 
+  handleCancel = () => {
+    this.setState({ isEditing: false });
+  }
+
   render() {
     const { post, classes } = this.props;
 
@@ -82,6 +86,14 @@ class Card extends React.Component {
               data-automation="saveButton"
             >
               Save
+            </Button>
+
+            <Button
+              size="small"
+              onClick={this.handleCancel}
+              data-automation="cancel"
+            >
+              Cancel
             </Button>
           </CardActions>
         )}

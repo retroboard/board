@@ -58,4 +58,19 @@ describe('edit mode', () => {
       .simulate('click');
     expect(wrapper.exists('[data-automation="textField"]')).toBeFalsy();
   });
+
+  it('turn edit mode off when canceled', () => {
+    const handleChange = jest.fn();
+    const wrapper = mount(<Card post={{text: 'eita'}} onChange={handleChange} />);
+    wrapper
+      .find('[data-automation="editButton"]')
+      .first()
+      .simulate('click');
+   
+    wrapper
+      .find('[data-automation="cancel"]')
+      .first()
+      .simulate('click');
+    expect(wrapper.exists('[data-automation="textField"]')).toBeFalsy();
+  });
 });
