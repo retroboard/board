@@ -2,7 +2,7 @@ version: 2
 jobs:
   build:
     docker:
-      - image: circleci/node:8.9.4
+      - image: circleci/node:10.11
     working_directory: ~/board
 
     steps:
@@ -20,6 +20,9 @@ jobs:
       - run:
           name: "Run Checks"
           command: npm run lint
+      - run:
+          name: "Vulnerability Checks"
+          command: npm audit
       - run:
           name: "Run Tests"
           command: npm run test
