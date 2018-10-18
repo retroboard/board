@@ -1,22 +1,16 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
-import Card from '@material-ui/core/Card';
-import CardContent from '@material-ui/core/CardContent';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import Typography from '@material-ui/core/Typography';
 import ipfsService from './ipfsService';
 import postsService from './postsService';
 import { withStyles } from '@material-ui/core/styles';
+import Card from './Card';
 
 const styles = {
   list: {
     maxWidth: '400px',
-  },
-  card: {
-    minHeight: '80px',
-    width: '100%',
   },
 };
 
@@ -44,6 +38,8 @@ class Board extends React.Component {
     const post = { text: event.target.value };
     this.setState({ post });
   };
+
+  handlePostUpdate =  post => this.service.add(post);
 
   resetPost = () => {
     const post = { text: '' };
@@ -73,11 +69,7 @@ class Board extends React.Component {
         <List className={classes.list}>
           {this.state.posts.map(post => (
             <ListItem key={post._id}>
-              <Card className={classes.card}>
-                <CardContent>
-                  <Typography>{post.text}</Typography>
-                </CardContent>
-              </Card>
+              <Card post={post} onChange={this.handlePostUpdate} />
             </ListItem>
           ))}
         </List>
@@ -88,7 +80,7 @@ class Board extends React.Component {
 
 Board.propTypes = {
   match: PropTypes.object.isRequired,
-  classes: PropTypes.object
+  classes: PropTypes.object,
 };
 
 export default withStyles(styles)(Board);

@@ -5,7 +5,6 @@ import { withStyles } from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import { Main } from './Main';
 import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import red from '@material-ui/core/colors/red';
 
 import './App.css';
 
@@ -15,23 +14,18 @@ const styles = {
   },
 };
 
-const awesomeGradient = `linear-gradient(45deg, ${red['A700']} 30%, ${
-  red[500]
-} 90%)`;
+
 
 const theme = createMuiTheme({
   palette: {
-    primary: { main: red['A700'] },
   },
   overrides: {
     MuiAppBar: {
       colorPrimary: {
-        background: awesomeGradient,
       },
     },
     MuiButton: {
       raisedPrimary: {
-        background: awesomeGradient,
       },
     },
   },
