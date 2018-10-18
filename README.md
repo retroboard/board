@@ -27,3 +27,9 @@ $ npm start
 ```
 $ npm test
 ```
+
+### Running functional tests
+
+```
+$ ./node_modules/.bin/codeceptjs run --steps
+```
