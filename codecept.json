@@ -1,18 +1,18 @@
 {
-  "tests": "Feature_Tests/*_test.js",
+  "tests": "./Feature_Tests/*.js",
   "timeout": 10000,
   "output": "./output",
   "helpers": {
     "Puppeteer": {
-      "url": "http://localhost",
+      "url": "http://localhost:3000/#/",
       "show": false
     }
   },
   "include": {
-    "I": "./Y"
+    "I": "./Feature_Tests/steps/homeSteps.js",
+    "homePage": "./Feature_Tests/pages/homePage.js"
   },
   "bootstrap": false,
   "mocha": {},
-  "name": "board",
-  "translation": "pt-BR"
+  "name": "board"
 }

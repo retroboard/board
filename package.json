@@ -29,6 +29,7 @@
     "eject": "react-scripts eject"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "codeceptjs": "^1.4.3",
     "enzyme": "^3.6.0",
     "enzyme-adapter-react-16": "^1.5.0",
