@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
@@ -14,69 +14,67 @@ const styles = {
   },
 };
 
-class Board extends React.Component {
-  state = {
-    posts: [],
-    post: { text: '' },
-  };
+let service;
 
-  componentDidMount() {
-    this.loadPosts();
-  }
+const Board = props => {
+  const { classes } = props;
+  const hash = props.match.params.hash;
 
-  async loadPosts() {
-    const hash = this.props.match.params.hash;
-    const node = await ipfsService.getInstance();
-    this.service = await postsService(hash, node);
+  const [posts, setPosts] = useState([]);
+  const [newPost, setNewPost] = useState({ text: '' });
 
-    this.service.posts.subscribe(posts => {
-      this.setState({ posts });
-    });
-  }
+  useEffect(
+    async () => {
+      const node = await ipfsService.getInstance();
+      service = await postsService(hash, node);
+      const subscription = service.posts.subscribe(posts => {
+        setPosts(posts);
+      });
+      return () => {
+        subscription.unsubscribe();
+      };
+    },
+    [hash]
+  );
 
-  handleChange = event => {
-    const post = { text: event.target.value };
-    this.setState({ post });
-  };
+  const handleChange = event => setNewPost({ text: event.target.value });
 
-  handlePostUpdate =  post => this.service.add(post);
+  const handlePostUpdate = post => service.add(post);
 
-  resetPost = () => {
-    const post = { text: '' };
-    this.setState({ post });
-  };
+  const resetPost = () => setNewPost({ text: '' });
 
-  handleSubmit = async event => {
+  const handleSubmit = async event => {
     event.preventDefault();
-    await this.service.add(this.state.post);
-    this.resetPost();
+    await service.add(newPost);
+    resetPost();
   };
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <div>
-        <form onSubmit={this.handleSubmit} noValidate autoComplete="off">
-          <TextField
-            id="post"
-            label="Post"
-            value={this.state.post.text}
-            onChange={this.handleChange}
-            margin="normal"
-          />
-        </form>
-
-        <List className={classes.list}>
-          {this.state.posts.map(post => (
-            <ListItem key={post._id}>
-              <Card post={post} onChange={this.handlePostUpdate} />
-            </ListItem>
-          ))}
-        </List>
-      </div>
-    );
+  if (!posts) {
+    return null;
   }
-}
+
+  return (
+    <div>
+      <form onSubmit={handleSubmit} noValidate autoComplete="off">
+        <TextField
+          id="post"
+          label="Post"
+          value={newPost.text}
+          onChange={handleChange}
+          margin="normal"
+        />
+      </form>
+
+      <List className={classes.list}>
+        {posts.map(post => (
+          <ListItem key={post._id}>
+            <Card post={post} onChange={handlePostUpdate} />
+          </ListItem>
+        ))}
+      </List>
+    </div>
+  );
+};
 
 Board.propTypes = {
   match: PropTypes.object.isRequired,

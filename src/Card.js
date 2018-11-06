@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import MCard from '@material-ui/core/Card';
@@ -38,93 +38,80 @@ const styles = {
   },
 };
 
-class Card extends React.Component {
-  state = {
-    isEditing: false,
-  };
+const Card = props => {
+  const { post, classes } = props;
+  const [isEditing, setEditing] = useState(false);
+  const [newText, setNewText] = useState('');
 
-  enterEditMode = () => {
-    this.setState({ isEditing: true });
-  };
+  const enterEditMode = () => setEditing(true);
+  const handleChange = event => setNewText(event.target.value);
+  const handleCancel = () => setEditing(false);
 
-  handleSave = () => {
-    this.setState({ isEditing: false });
-    if (this.props.onChange) {
-      const post = { ...this.props.post, ...{ text: this.state.newText } };
-      this.props.onChange(post);
+  const handleSave = () => {
+    setEditing(false);
+    if (props.onChange) {
+      const post = { ...props.post, ...{ text: newText } };
+      props.onChange(post);
     }
   };
 
-  handleChange = event => {
-    const newText = event.target.value;
-    this.setState({ newText });
-  };
+  return (
+    <MCard className={classes.container}>
+      {!isEditing && (
+        <CardHeader
+          className={classes.header}
+          action={
+            <IconButton
+              className={classes.edit}
+              aria-label="Edit"
+              data-automation="editButton"
+              onClick={enterEditMode}
+            >
+              <Edit className={classes.editIcon} />
+            </IconButton>
+          }
+        />
+      )}
+      <CardContent className={classes.content}>
+        {!isEditing && (
+          <Typography data-automation="text">{post.text}</Typography>
+        )}
 
-  handleCancel = () => {
-    this.setState({ isEditing: false });
-  };
-
-  render() {
-    const { post, classes } = this.props;
-
-    return (
-      <MCard className={classes.container}>
-        {!this.state.isEditing && (
-          <CardHeader
-            className={classes.header}
-            action={
-              <IconButton
-                className={classes.edit}
-                aria-label="Edit"
-                data-automation="editButton"
-                onClick={this.enterEditMode}
-              >
-                <Edit className={classes.editIcon} />
-              </IconButton>
-            }
+        {isEditing && (
+          <TextField
+            data-automation="textField"
+            multiline
+            className={classes.textField}
+            margin="normal"
+            variant="outlined"
+            defaultValue={post.text}
+            onChange={handleChange}
           />
         )}
-        <CardContent className={classes.content}>
-          {!this.state.isEditing && (
-            <Typography data-automation="text">{post.text}</Typography>
-          )}
+      </CardContent>
+      {isEditing && (
+        <CardActions>
+          <Button
+            className={classes.actionButton}
+            onClick={handleCancel}
+            data-automation="cancel"
+          >
+            Cancel
+          </Button>
 
-          {this.state.isEditing && (
-            <TextField
-              data-automation="textField"
-              multiline
-              className={classes.textField}
-              margin="normal"
-              variant="outlined"
-              defaultValue={post.text}
-              onChange={this.handleChange}
-            />
-          )}
-        </CardContent>
-        {this.state.isEditing && (
-          <CardActions>
-            <Button
-              className={classes.actionButton}
-              onClick={this.handleCancel}
-              data-automation="cancel"
-            >
-              Cancel
-            </Button>
-
-            <Button
-              className={classes.actionButton}
-              onClick={this.handleSave}
-              color="primary"
-              data-automation="saveButton"
-            >
-              Save
-            </Button>
-          </CardActions>
-        )}
-      </MCard>
-    );
-  }
-}
+          <Button
+            className={classes.actionButton}
+            onClick={handleSave}
+            color="primary"
+            data-automation="saveButton"
+          >
+            Save
+          </Button>
+        </CardActions>
+      )}
+    </MCard>
+  );
+};
 
 Card.propTypes = {
   post: PropTypes.object.isRequired,
