@@ -22,6 +22,7 @@ const Board = props => {
 
   const [posts, setPosts] = useState([]);
   const [newPost, setNewPost] = useState({ text: '' });
+  const [isReady, setIsReady] = useState(false);
 
   useEffect(
     async () => {
@@ -29,6 +30,7 @@ const Board = props => {
       service = await postsService(hash, node);
       const subscription = service.posts.subscribe(posts => {
         setPosts(posts);
+        setIsReady(true);
       });
       return () => {
         subscription.unsubscribe();
@@ -49,7 +51,7 @@ const Board = props => {
     resetPost();
   };
 
-  if (!posts) {
+  if (!isReady) {
     return null;
   }
 
