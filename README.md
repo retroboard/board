@@ -6,7 +6,7 @@ RetroBoard is a secure, fast, private and collaborative board for retrospectives
 
 This project is a Work in Progress, you can check the demo on [https://retroboard.github.io/board](https://retroboard.github.io/board)
 
-### Initial Setup
+## Initial Setup
 
 Requirements:
   - npm
@@ -27,3 +27,6 @@ $ npm start
 ```
 $ npm test
 ```
+
+## Want to help?
+Want to contribute some code, or improve documentation? Excellent! Read up on our guidelines for [contributing](https://github.com/retroboard/board/blob/master/CONTRIBUTING.md) and then check out one of our [issues](https://github.com/retroboard/board/issues).
