@@ -1,6 +1,6 @@
 # Board
 
-[![CircleCI](https://circleci.com/gh/retroboard/board/tree/master.svg?style=svg)](https://circleci.com/gh/retroboard/board/tree/master)
+[![CircleCI](https://circleci.com/gh/retroboard/board/tree/master.svg?style=svg)](https://circleci.com/gh/retroboard/board/tree/master) [![Join the chat at https://gitter.im/retroboard/board](https://badges.gitter.im/retroboard/board.svg)](https://gitter.im/retroboard/board?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge)
 
 RetroBoard is a secure, fast, private and collaborative board for retrospectives. We take your privacy very seriously, that's why RetroBoard is secure & private by design. RetroBoard is completely peer-to-peer and decentralized. We never process personal data, we don’t store such data centrally on a server. This means we can’t pass on or sell your data to third parties.
 
