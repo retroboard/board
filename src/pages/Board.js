@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ipfsService from './ipfsService';
-import postsService from './postsService';
+import ipfsService from '../services/ipfsService';
+import postsService from '../services/postsService';
 import { withStyles } from '@material-ui/core/styles';
-import Card from './Card';
+import Card from '../components/Card';
 
 const styles = {
   list: {

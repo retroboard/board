@@ -4,7 +4,7 @@ function IpfsMock() {
   };
 }
 
-const makeService = () => require('./ipfsService').default;
+const makeService = () => require('../../services/ipfsService').default;
 
 describe('#getInstance()', () => {
   it('resolves to an IPFS node instance when its ready', async () => {

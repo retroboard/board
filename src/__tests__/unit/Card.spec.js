@@ -1,4 +1,4 @@
-import Card from './Card';
+import Card from '../../components/Card';
 import React from 'react';
 import { configure, render, mount } from 'enzyme';
 import Adapter from 'enzyme-adapter-react-16';

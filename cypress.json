@@ -1,8 +1,8 @@
 {
   "baseUrl": "http://localhost:3000",
-  "integrationFolder": "./test/journey",
-  "videosFolder": "./test/videos",
-  "screenshotsFolder": "./test/screenshots",
+  "integrationFolder": "./src/__tests__/journey",
+  "videosFolder": "./src/__tests__/videos",
+  "screenshotsFolder": "./src/__tests__/screenshots",
   "video": false,
   "ignoreTestFiles": "*+(mp4|png|utils.js|.bak)",
   "numTestsKeptInMemory": 0,

@@ -33,7 +33,7 @@ describe('postsRepositiry', () => {
   describe('#add()', () => {
     it('adds new post', async () => {
       const post = { id: 'id' };
-      const postsService = require('./postsService').default;
+      const postsService = require('../../services/postsService').default;
       const repo = await postsService();
       repo.add(post);
       expect(db.put).toHaveBeenCalledWith(post);
@@ -41,7 +41,7 @@ describe('postsRepositiry', () => {
 
     it('adds ID to post if not provided', async () => {
       const post = {};
-      const postsService = require('./postsService').default;
+      const postsService = require('../../services/postsService').default;
       require('uuid/v4').mockReturnValue('uuid');
       const repo = await postsService();
       repo.add(post);
@@ -50,7 +50,7 @@ describe('postsRepositiry', () => {
 
     it('propagates new post to subscribers', async (done) => {
       const post = jest.fn();
-      const postsService = require('./postsService').default;
+      const postsService = require('../../services/postsService').default;
       const repo = await postsService();
       const subscriber = jest.fn();
       repo.posts.subscribe(subscriber);
@@ -67,7 +67,7 @@ describe('postsRepositiry', () => {
     it('returns all posts from the db', async done => {
       const expectedPosts = jest.fn();
       db.query.mockResolvedValue(expectedPosts);
-      const postsService = require('./postsService').default;
+      const postsService = require('../../services/postsService').default;
       const repo = await postsService();
       repo.posts.subscribe(posts => {
         expect(posts).toEqual(expectedPosts);
@@ -83,7 +83,7 @@ describe('postsRepositiry', () => {
       db.query
         .mockResolvedValueOnce(Promise.resolve(firstExpectedPosts))
         .mockResolvedValueOnce(Promise.resolve(secondExpectedPosts));
-      const postsService = require('./postsService').default;
+      const postsService = require('../../services/postsService').default;
       const subscriber = jest.fn();
       const repo = await postsService();
       repo.posts.subscribe(subscriber);
@@ -100,7 +100,7 @@ describe('postsRepositiry', () => {
   describe('#delete()', () => {
     it('remove card', async () => {
       const post = { _id: 'id' };
-      const postsService = require('./postsService').default;
+      const postsService = require('../../services/postsService').default;
       const repo = await postsService();
       repo.remove(post);
       expect(db.del).toHaveBeenCalledWith('id');

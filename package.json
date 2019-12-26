@@ -41,6 +41,12 @@
     "prettier": "1.11.1",
     "start-server-and-test": "^1.10.6"
   },
+  "jest": {
+    "watchPathIgnorePatterns": [
+      "<rootDir>/src/__tests__/journey",
+      "<rootDir>/src/__tests__/screenshots"
+    ]
+  },
   "engines": {
     "node": "ˆ10.11"
   },
