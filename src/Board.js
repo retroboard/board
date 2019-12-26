@@ -43,6 +43,8 @@ const Board = props => {
 
   const handlePostUpdate = post => service.add(post);
 
+  const handleDeletePost = post => service.remove(post);
+
   const resetPost = () => setNewPost({ text: '' });
 
   const handleSubmit = async event => {
