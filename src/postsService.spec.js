@@ -14,9 +14,10 @@ describe('postsRepositiry', () => {
       query: jest.fn(),
       load: jest.fn(),
       put: jest.fn(),
+      del: jest.fn(),
       events: {
         on: (event, cb) => {
-          if(event === 'replicated') {
+          if (event === 'replicated') {
             times(cb, replicationTimes);
           }
         },
@@ -44,7 +45,7 @@ describe('postsRepositiry', () => {
       require('uuid/v4').mockReturnValue('uuid');
       const repo = await postsService();
       repo.add(post);
-      expect(db.put).toHaveBeenCalledWith({ _id: 'uuid'});
+      expect(db.put).toHaveBeenCalledWith({ _id: 'uuid' });
     });
 
     it('propagates new post to subscribers', async (done) => {
@@ -93,6 +94,16 @@ describe('postsRepositiry', () => {
         expect(subscriber).toHaveBeenCalledWith(secondExpectedPosts);
         done();
       });
+    });
+  });
+
+  describe('#delete()', () => {
+    it('remove card', async () => {
+      const post = { _id: 'id' };
+      const postsService = require('./postsService').default;
+      const repo = await postsService();
+      repo.remove(post);
+      expect(db.del).toHaveBeenCalledWith('id');
     });
   });
 });

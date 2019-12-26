@@ -32,8 +32,16 @@ export default async (hash, node) => {
     return data;
   };
 
+  const remove = async post => {
+    const _id = post._id;
+    const data = await db.del(_id);
+    posts.next(await all());
+    return data;
+  };
+
   return {
     posts,
     add,
+    remove,
   };
 };
