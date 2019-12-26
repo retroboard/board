@@ -1,0 +1,11 @@
+{
+  "baseUrl": "http://localhost:3000",
+  "integrationFolder": "./test/journey",
+  "videosFolder": "./test/videos",
+  "screenshotsFolder": "./test/screenshots",
+  "video": false,
+  "ignoreTestFiles": "*+(mp4|png|utils.js|.bak)",
+  "numTestsKeptInMemory": 0,
+  "waitForAnimations": false,
+  "defaultCommandTimeout": 60000
+}
