@@ -72,7 +72,7 @@ const Board = props => {
       <List className={classes.list}>
         {posts.map(post => (
           <ListItem key={post._id}>
-            <Card post={post} onChange={handlePostUpdate} />
+            <Card post={post} onChange={handlePostUpdate} onDelete={handleDeletePost} />
           </ListItem>
         ))}
       </List>
