@@ -48,8 +48,8 @@
   },
   "jest": {
     "watchPathIgnorePatterns": [
-      "<rootDir>/src/__tests__/journey",
-      "<rootDir>/src/__tests__/screenshots"
+      "src/__tests__/journey",
+      "src/__tests__/screenshots"
     ]
   },
   "engines": {
