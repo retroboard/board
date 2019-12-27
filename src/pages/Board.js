@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import TextField from '@material-ui/core/TextField';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ipfsService from './ipfsService';
-import postsService from './postsService';
+import ipfsService from '../services/ipfsService';
+import postsService from '../services/postsService';
 import { withStyles } from '@material-ui/core/styles';
-import Card from './Card';
+import Card from '../components/Card';
 
 const styles = {
   list: {
@@ -43,6 +43,8 @@ const Board = props => {
 
   const handlePostUpdate = post => service.add(post);
 
+  const handleDeletePost = post => service.remove(post);
+
   const resetPost = () => setNewPost({ text: '' });
 
   const handleSubmit = async event => {
@@ -70,7 +72,7 @@ const Board = props => {
       <List className={classes.list}>
         {posts.map(post => (
           <ListItem key={post._id}>
-            <Card post={post} onChange={handlePostUpdate} />
+            <Card post={post} onChange={handlePostUpdate} onDelete={handleDeletePost} />
           </ListItem>
         ))}
       </List>

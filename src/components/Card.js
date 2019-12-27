@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment } from 'react';
 import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import MCard from '@material-ui/core/Card';
@@ -9,7 +9,9 @@ import Typography from '@material-ui/core/Typography';
 import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Edit from '@material-ui/icons/Edit';
+import Delete from '@material-ui/icons/Delete';
 import TextField from '@material-ui/core/TextField';
+import { ModalConfirmation } from './Modal';
 
 const styles = {
   container: {
@@ -32,6 +34,9 @@ const styles = {
   editIcon: {
     fontSize: 14,
   },
+  deleteIcon: {
+    fontSize: 14,
+  },
   actionButton: {
     fontSize: '.5em',
     minHeight: '0',
@@ -46,6 +51,10 @@ const Card = props => {
   const enterEditMode = () => setEditing(true);
   const handleChange = event => setNewText(event.target.value);
   const handleCancel = () => setEditing(false);
+  const removeCard = async () => {
+    const onConfirm = props.onDelete && (() => props.onDelete(props.post));
+    ModalConfirmation('Are you sure?', 'Delete Card', onConfirm);
+  };
 
   const handleSave = () => {
     setEditing(false);
@@ -61,14 +70,25 @@ const Card = props => {
         <CardHeader
           className={classes.header}
           action={
-            <IconButton
-              className={classes.edit}
-              aria-label="Edit"
-              data-automation="editButton"
-              onClick={enterEditMode}
-            >
-              <Edit className={classes.editIcon} />
-            </IconButton>
+            <Fragment>
+              <IconButton
+                className={classes.edit}
+                aria-label="Edit"
+                data-automation="editButton"
+                onClick={enterEditMode}
+              >
+                <Edit className={classes.editIcon} />
+              </IconButton>
+
+              <IconButton
+                className={classes.delete}
+                aria-label="Remove"
+                data-automation="deleteButton"
+                onClick={removeCard}
+              >
+                <Delete className={classes.deleteIcon} />
+              </IconButton>
+            </Fragment>
           }
         />
       )}
@@ -117,6 +137,7 @@ Card.propTypes = {
   post: PropTypes.object.isRequired,
   classes: PropTypes.object,
   onChange: PropTypes.func,
+  onDelete: PropTypes.func,
 };
 
 export default withStyles(styles)(Card);
