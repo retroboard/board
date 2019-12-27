@@ -4,6 +4,7 @@ module.exports = {
         "node": true,
         "jest": true,
         "es6": true,
+        "cypress/globals": true
     },
     "extends": ["eslint:recommended", "plugin:react/recommended"],
     "parser": "babel-eslint",
@@ -15,7 +16,7 @@ module.exports = {
         "sourceType": "module"
     },
     "plugins": [
-        "react",
+        "react", "cypress"
     ],
     "rules": {
         "indent": [
@@ -34,5 +35,6 @@ module.exports = {
             "error",
             "always"
         ],
+
     }
 };

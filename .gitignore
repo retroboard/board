@@ -5,6 +5,8 @@
 
 # testing
 /coverage
+/src/__tests__/videos
+/src/__tests__/screenshots
 
 # production
 /build

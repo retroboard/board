@@ -33,11 +33,16 @@
     "cypress": "cypress run"
   },
   "devDependencies": {
+    "babel-eslint": "^10.0.3",
     "cypress": "^3.8.1",
     "cypress-image-snapshot": "^3.1.1",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.2",
+    "eslint": "^6.8.0",
+    "eslint-plugin-cypress": "^2.8.1",
+    "eslint-plugin-react": "^7.17.0",
     "gh-pages": "^1.1.0",
+    "jest": "^24.9.0",
     "prettier": "1.11.1",
     "start-server-and-test": "^1.10.6"
   },
