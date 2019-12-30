@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "test": "react-scripts test --testPathIgnorePatterns=src/__tests__/journey --env=jsdom",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "format": "prettier --write */**/*.js",
@@ -44,12 +44,6 @@
     "gh-pages": "^1.1.0",
     "prettier": "1.11.1",
     "start-server-and-test": "^1.10.6"
-  },
-  "jest": {
-    "watchPathIgnorePatterns": [
-      "src/__tests__/journey",
-      "src/__tests__/screenshots"
-    ]
   },
   "engines": {
     "node": "ˆ10.11"
