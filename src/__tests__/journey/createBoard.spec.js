@@ -1,5 +1,7 @@
 describe('Create a board', function () {
-  it('Does not do much!', function () {
-    expect(true).to.equal(true);
+  it('Visits home page and when click on `New board` redirect to board page', function () {
+    cy.visit('http://localhost:3000');
+    cy.contains('New board').click();
+    cy.url().should('include', '/board');
   });
 });
