@@ -1,0 +1,15 @@
+version: "2"
+services:
+  board:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    command: /usr/local/bin/nodemon --exec npm start
+    environment: 
+      NODE_ENV: development
+      
+    ports:
+      - 3000:3000
+    volumes:
+      - .:/home/app/board
+      - /home/app/board/node_modules
