@@ -3,7 +3,6 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.11
-      - image: cypress/base:8
     working_directory: ~/board
 
     steps:
@@ -13,6 +12,8 @@ jobs:
             - dependency-cache-{{ .Branch }}-{{ checksum "package.json" }}
             - dependency-cache-{{ .Branch }}
             - dependency-cache
+      - run:
+          command: apt-get install libXcomposite
       - run:
           name: "Install Dependencies"
           command: |
