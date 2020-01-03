@@ -15,7 +15,7 @@ export default async (hash, node) => {
 
   const all = async () => {
     await db.load();
-    const posts = await db.query(doc => doc);
+    const posts = db.query(doc => doc);
     posts.sort((post1, post2) => (post1.date - post2.date));
     return posts;
   };

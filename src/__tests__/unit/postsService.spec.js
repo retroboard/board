@@ -81,8 +81,8 @@ describe('postsRepositiry', () => {
       replicationTimes = 4;
 
       db.query
-        .mockResolvedValueOnce(Promise.resolve(firstExpectedPosts))
-        .mockResolvedValueOnce(Promise.resolve(secondExpectedPosts));
+        .mockReturnValueOnce(firstExpectedPosts)
+        .mockReturnValueOnce(secondExpectedPosts);
       const postsService = require('../../services/postsService').default;
       const subscriber = jest.fn();
       const repo = await postsService();
