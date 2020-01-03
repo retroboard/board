@@ -13,7 +13,7 @@ jobs:
             - dependency-cache-{{ .Branch }}
             - dependency-cache
       - run:
-          command: apt-get install libXcomposite
+          command: sudo apt-get install libXcomposite
       - run:
           name: "Install Dependencies"
           command: |
