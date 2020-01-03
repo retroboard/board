@@ -17,6 +17,7 @@ jobs:
           key: dependency-cache-{{ checksum "package.json" }}
           paths:
             - node_modules
+            - /home/circleci/.cache/Cypress
       - run:
           name: "Run Checks"
           command: npm run lint
