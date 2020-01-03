@@ -8,15 +8,19 @@ jobs:
     steps:
       - checkout
       - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          keys:
+            - dependency-cache-{{ .Branch }}-{{ checksum "package.json" }}
+            - dependency-cache-{{ .Branch }}
+            - dependency-cache
       - run:
           name: "Install Dependencies"
           command: |
-            npm install
+            npm ci
       - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
+          key: dependency-cache-{{ .Branch }}-{{ checksum "package.json" }}
           paths:
-            - node_modules
+            - ~/.npm
+            - ~/.cache
       - run:
           name: "Run Checks"
           command: npm run lint
