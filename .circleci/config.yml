@@ -3,6 +3,7 @@ jobs:
   build:
     docker:
       - image: circleci/node:10.11
+      - image: cypress/base:8
     working_directory: ~/board
 
     steps:
