@@ -24,5 +24,8 @@ jobs:
           name: "Vulnerability Checks"
           command: npm audit
       - run:
-          name: "Run Tests"
+          name: "Run Unit Tests"
           command: npm run test
+      - run:
+          name: "Run Journey Tests"
+          command: npm run test:cypress
