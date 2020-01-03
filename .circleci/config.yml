@@ -7,17 +7,16 @@ jobs:
 
     steps:
       - checkout
-      - restore_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-      - run:
-          name: "Install Dependencies"
-          command: |
-            npm install
-      - save_cache:
-          key: dependency-cache-{{ checksum "package.json" }}
-          paths:
-            - node_modules
-            - /home/circleci/.cache/Cypress
+      # - restore_cache:
+      #     key: dependency-cache-{{ checksum "package.json" }}
+      # - run:
+      #     name: "Install Dependencies"
+      #     command: |
+      #       npm install
+      # - save_cache:
+      #     key: dependency-cache-{{ checksum "package.json" }}
+      #     paths:
+      #       - node_modules
       - run:
           name: "Run Checks"
           command: npm run lint
