@@ -39,7 +39,7 @@ const Board = props => {
     [hash]
   );
 
-  const handleChange = event => setNewPost({ text: event.target.value });
+  const handleChange = event => setNewPost({ text: event.target.value, date: Date.now() });
 
   const handlePostUpdate = post => service.add(post);
 

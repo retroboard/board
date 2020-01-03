@@ -11,7 +11,7 @@ describe('postsRepositiry', () => {
   beforeEach(() => {
     replicationTimes = 0;
     db = {
-      query: jest.fn(),
+      query: jest.fn(() => []),
       load: jest.fn(),
       put: jest.fn(),
       del: jest.fn(),
@@ -65,8 +65,8 @@ describe('postsRepositiry', () => {
 
   describe('#posts()', () => {
     it('returns all posts from the db', async done => {
-      const expectedPosts = jest.fn();
-      db.query.mockResolvedValue(expectedPosts);
+      const expectedPosts = [{ text: 'Text', date: Date.now() }];
+      db.query.mockReturnValue(expectedPosts);
       const postsService = require('../../services/postsService').default;
       const repo = await postsService();
       repo.posts.subscribe(posts => {
