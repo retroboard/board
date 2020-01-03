@@ -22,7 +22,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --testPathIgnorePatterns=src/__tests__/journey --env=jsdom",
+    "test": "react-scripts test --testPathIgnorePatterns=src/__tests__/journey --env=jsdom --watchAll=false",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build",
     "format": "prettier --write */**/*.js",
@@ -31,6 +31,12 @@
     "cypress:open": "cypress open",
     "test:cypress": "start-server-and-test start http://localhost:3000 cypress",
     "cypress": "cypress run"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run lint && npm test && npm run test:cypress",
+      "pre-push": "npm run lint && npm test && npm run test:cypress"
+    }
   },
   "devDependencies": {
     "babel-eslint": "^10.0.3",
@@ -42,6 +48,7 @@
     "eslint-plugin-cypress": "^2.8.1",
     "eslint-plugin-react": "^7.17.0",
     "gh-pages": "^1.1.0",
+    "husky": "^3.1.0",
     "prettier": "1.11.1",
     "start-server-and-test": "^1.10.6"
   },
