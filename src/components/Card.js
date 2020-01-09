@@ -64,7 +64,7 @@ const Card = props => {
     if (props.onVote) {
       props.onVote(props.post);
     }
-  }
+  };
 
   const handleSave = () => {
     setEditing(false);
@@ -140,7 +140,7 @@ const Card = props => {
         </CardActions>
       )}
 
-      <CardActions style={{ "float": "right" }}>
+      <CardActions style={{ 'float': 'right' }}>
         {
           !isEditing && (<IconButton
             className={classes.vote}
@@ -152,7 +152,7 @@ const Card = props => {
           </IconButton>)
         }
 
-        <Typography data-automation="count" style={{ padding: "12px 12px 12px 9px" }}>{post.vote}</Typography>
+        <Typography data-automation="count" style={{ padding: '12px 12px 12px 9px' }}>{post.vote}</Typography>
       </CardActions>
 
     </MCard >

@@ -15,6 +15,7 @@ describe('postsRepositiry', () => {
       load: jest.fn(),
       put: jest.fn(),
       del: jest.fn(),
+      vote: jest.fn(),
       events: {
         on: (event, cb) => {
           if (event === 'replicated') {
@@ -104,6 +105,17 @@ describe('postsRepositiry', () => {
       const repo = await postsService();
       repo.remove(post);
       expect(db.del).toHaveBeenCalledWith('id');
+    });
+  });
+
+  describe('#vote()', () => {
+    it('add vote in post', async () => {
+      const post = { id: 'id', vote: 2 };
+      const postExpected = { id: 'id', vote: 3 };
+      const postsService = require('../../services/postsService').default;
+      const repo = await postsService();
+      repo.vote(post);
+      expect(db.put).toHaveBeenCalledWith(postExpected);
     });
   });
 });

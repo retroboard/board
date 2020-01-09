@@ -41,9 +41,18 @@ export default async (hash, node) => {
     return data;
   };
 
+  const vote = async post => {
+    const _id = post._id;
+    post.vote = (post.vote + 1);
+    const data = await db.put({ ...post, ...{ _id } });
+    posts.next(await all());
+    return data;
+  };
+
   return {
     posts,
     add,
     remove,
+    vote
   };
 };
