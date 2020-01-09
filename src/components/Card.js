@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
+import ThumbUp from '@material-ui/icons/ThumbUp';
 import TextField from '@material-ui/core/TextField';
 import { ModalConfirmation } from './Modal';
 
@@ -37,6 +38,9 @@ const styles = {
   deleteIcon: {
     fontSize: 14,
   },
+  voteIcon: {
+    fontSize: 14,
+  },
   actionButton: {
     fontSize: '.5em',
     minHeight: '0',
@@ -55,6 +59,12 @@ const Card = props => {
     const onConfirm = props.onDelete && (() => props.onDelete(props.post));
     ModalConfirmation('Are you sure?', 'Delete Card', onConfirm);
   };
+
+  const handleVoteCard = () => {
+    if (props.onVote) {
+      props.onVote(props.post);
+    }
+  }
 
   const handleSave = () => {
     setEditing(false);
@@ -86,7 +96,7 @@ const Card = props => {
                 data-automation="deleteButton"
                 onClick={removeCard}
               >
-                <Delete className={classes.deleteIcon} />
+                <Delete className={classes.voteIcon} />
               </IconButton>
             </Fragment>
           }
@@ -129,7 +139,23 @@ const Card = props => {
           </Button>
         </CardActions>
       )}
-    </MCard>
+
+      <CardActions style={{ "float": "right" }}>
+        {
+          !isEditing && (<IconButton
+            className={classes.vote}
+            aria-label="Vote"
+            data-automation="voteButton"
+            onClick={handleVoteCard}
+          >
+            <ThumbUp className={classes.deleteIcon} />
+          </IconButton>)
+        }
+
+        <Typography data-automation="count" style={{ padding: "12px 12px 12px 9px" }}>{post.vote}</Typography>
+      </CardActions>
+
+    </MCard >
   );
 };
 
@@ -138,6 +164,7 @@ Card.propTypes = {
   classes: PropTypes.object,
   onChange: PropTypes.func,
   onDelete: PropTypes.func,
+  onVote: PropTypes.func,
 };
 
 export default withStyles(styles)(Card);
