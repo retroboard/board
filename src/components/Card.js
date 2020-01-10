@@ -96,7 +96,7 @@ const Card = props => {
                 data-automation="deleteButton"
                 onClick={removeCard}
               >
-                <Delete className={classes.voteIcon} />
+                <Delete className={classes.deleteIcon} />
               </IconButton>
             </Fragment>
           }
@@ -148,7 +148,7 @@ const Card = props => {
             data-automation="voteButton"
             onClick={handleVoteCard}
           >
-            <ThumbUp className={classes.deleteIcon} />
+            <ThumbUp className={classes.voteIcon} />
           </IconButton>)
         }
 
