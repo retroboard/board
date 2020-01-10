@@ -32,19 +32,19 @@ const styles = {
     margin: 0,
     width: '100%',
   },
-  editIcon: {
-    fontSize: 14,
-  },
-  deleteIcon: {
-    fontSize: 14,
-  },
-  voteIcon: {
+  actionIcon: {
     fontSize: 14,
   },
   actionButton: {
     fontSize: '.5em',
     minHeight: '0',
   },
+  countVotes: {
+    padding: '12px 12px 12px 9px'
+  },
+  footerCardAction: {
+    float: 'right'
+  }
 };
 
 const Card = props => {
@@ -87,7 +87,7 @@ const Card = props => {
                 data-automation="editButton"
                 onClick={enterEditMode}
               >
-                <Edit className={classes.editIcon} />
+                <Edit className={classes.actionIcon} />
               </IconButton>
 
               <IconButton
@@ -96,7 +96,7 @@ const Card = props => {
                 data-automation="deleteButton"
                 onClick={removeCard}
               >
-                <Delete className={classes.deleteIcon} />
+                <Delete className={classes.actionIcon} />
               </IconButton>
             </Fragment>
           }
@@ -140,7 +140,7 @@ const Card = props => {
         </CardActions>
       )}
 
-      <CardActions style={{ 'float': 'right' }}>
+      <CardActions className={classes.footerCardAction}>
         {
           !isEditing && (<IconButton
             className={classes.vote}
@@ -148,11 +148,11 @@ const Card = props => {
             data-automation="voteButton"
             onClick={handleVoteCard}
           >
-            <ThumbUp className={classes.voteIcon} />
+            <ThumbUp className={classes.actionIcon} />
           </IconButton>)
         }
 
-        <Typography data-automation="count" style={{ padding: '12px 12px 12px 9px' }}>{post.vote}</Typography>
+        <Typography data-automation="count" className={classes.countVotes}>{post.vote}</Typography>
       </CardActions>
 
     </MCard >
