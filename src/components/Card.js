@@ -44,24 +44,22 @@ const styles = {
 };
 
 const Card = props => {
-  const { post, classes } = props;
-  const [isEditing, setEditing] = useState(false);
+  const { post, classes, isEditingPost } = props;
+  const [isEditing, setEditing] = useState(isEditingPost);
   const [newText, setNewText] = useState('');
 
   const enterEditMode = () => setEditing(true);
   const handleChange = event => setNewText(event.target.value);
   const handleCancel = () => setEditing(false);
   const removeCard = async () => {
-    const onConfirm = props.onDelete && (() => props.onDelete(props.post));
-    ModalConfirmation('Are you sure?', 'Delete Card', onConfirm);
+    const onConfirm = () => props.deletePost(props.post);
+    ConfirmationModal('Are you sure?', 'Delete Card', onConfirm);
   };
 
   const handleSave = () => {
     setEditing(false);
-    if (props.onChange) {
-      const post = { ...props.post, ...{ text: newText } };
-      props.onChange(post);
-    }
+    const post = { ...props.post, ...{ text: newText } };
+    props.updatePost(post);
   };
 
   return (
@@ -136,8 +134,9 @@ const Card = props => {
 Card.propTypes = {
   post: PropTypes.object.isRequired,
   classes: PropTypes.object,
-  onChange: PropTypes.func,
-  onDelete: PropTypes.func,
+  isEditingPost: PropTypes.bool,
+  deletePost: PropTypes.func,
+  updatePost: PropTypes.func
 };
 
 export default withStyles(styles)(Card);

@@ -1,17 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import PropTypes from 'prop-types';
-import TextField from '@material-ui/core/TextField';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ipfsService from '../services/ipfsService';
-import postsService from '../services/postsService';
+import Column from '../components/Column';
+import { InputModal } from '../components/InputModal';
+import Button from '@material-ui/core/Button';
+import columnsService from '../services/columnsService';
 import { withStyles } from '@material-ui/core/styles';
-import Card from '../components/Card';
+
 
 const styles = {
-  list: {
-    maxWidth: '400px',
+  ulList: {
+    listStyle: 'none',
+    display: 'flex'
   },
+  ilList: {
+    margin: '10px'
+  }
 };
 
 let service;
@@ -20,37 +24,41 @@ const Board = props => {
   const { classes } = props;
   const hash = props.match.params.hash;
 
-  const [posts, setPosts] = useState([]);
-  const [newPost, setNewPost] = useState({ text: '' });
+  const [columns, setColumns] = useState([]);
+
   const [isReady, setIsReady] = useState(false);
 
   useEffect(
-    async () => {
-      const node = await ipfsService.getInstance();
-      service = await postsService(hash, node);
-      const subscription = service.posts.subscribe(posts => {
-        setPosts(posts);
-        setIsReady(true);
-      });
-      return () => {
-        subscription.unsubscribe();
-      };
+    () => {
+      async function fetchColumns () {
+        const node = await ipfsService.getInstance();
+        service = await columnsService(hash, node);
+        const subscription = service.columns.subscribe(columns => {
+          setColumns(columns);
+          setIsReady(true);
+        });
+        return () => {
+          subscription.unsubscribe();
+        };
+      }
+      fetchColumns();
     },
     [hash]
   );
 
-  const handleChange = event => setNewPost({ text: event.target.value, date: Date.now() });
+  const handleColumnUpdate = column => service.add(column);
 
-  const handlePostUpdate = post => service.add(post);
+  const handleColumnDelete = column => service.remove(column);
 
-  const handleDeletePost = post => service.remove(post);
+  const openInputModal = async () => {
+    InputModal('', 'New Column', onConfirm);
+  };
 
-  const resetPost = () => setNewPost({ text: '' });
+  const onConfirm = columnName => addColumn(columnName);
 
-  const handleSubmit = async event => {
-    event.preventDefault();
-    await service.add(newPost);
-    resetPost();
+  const addColumn = async columnName => {
+    const newColumn = { name: columnName, posts: [], date: Date.now() };
+    await service.add(newColumn);
   };
 
   if (!isReady) {
@@ -59,23 +67,22 @@ const Board = props => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit} noValidate autoComplete="off">
-        <TextField
-          id="post"
-          label="Post"
-          value={newPost.text}
-          onChange={handleChange}
-          margin="normal"
-        />
-      </form>
+      <Button
+        onClick={openInputModal}
+        color="primary"
+        variant="raised"
+        data-automation="saveColumnButton"
+      >
+        Add Column
+      </Button>
 
-      <List className={classes.list}>
-        {posts.map(post => (
-          <ListItem key={post._id}>
-            <Card post={post} onChange={handlePostUpdate} onDelete={handleDeletePost} />
-          </ListItem>
+      <ul className={classes.ulList}>
+        {columns.map(column => (
+          <li className={classes.ilList} key={column._id}>
+            <Column column={column} updateColumn={handleColumnUpdate} deleteColumn={handleColumnDelete}/>
+          </li>
         ))}
-      </List>
+      </ul>
     </div>
   );
 };

@@ -43,10 +43,10 @@ describe('edit mode', () => {
     expect(wrapper.exists('[data-automation="textField"]')).toBeTruthy();
   });
 
-  it('calls onChange with new text when saved', () => {
-    const originalPost = { text: 'eita', _id: 1 };
-    const handleChange = jest.fn();
-    const wrapper = mount(<Card post={originalPost} onChange={handleChange} />);
+  it('calls updatePost with new text when saved', () => {
+    const originalPost = { text: 'eita', id: 1, date: Date.now() };
+    const updateColumnPost = jest.fn();
+    const wrapper = mount(<Card post={originalPost} updatePost={updateColumnPost} />);
     wrapper
       .find('[data-automation="editButton"]')
       .first()
@@ -59,12 +59,12 @@ describe('edit mode', () => {
       .find('[data-automation="saveButton"]')
       .first()
       .simulate('click');
-    expect(handleChange).toBeCalledWith({ ...originalPost, ...{ text: 'new text' } });
+    expect(updateColumnPost).toBeCalledWith({ ...originalPost, ...{ text: 'new text' } });
   });
 
   it('turn edit mode off when saved', () => {
-    const handleChange = jest.fn();
-    const wrapper = mount(<Card post={{ text: 'eita' }} onChange={handleChange} />);
+    const updateColumnPost = jest.fn();
+    const wrapper = mount(<Card post={{ text: 'eita' }} updatePost={updateColumnPost} />);
     wrapper
       .find('[data-automation="editButton"]')
       .first()
@@ -78,8 +78,8 @@ describe('edit mode', () => {
   });
 
   it('turn edit mode off when canceled', () => {
-    const handleChange = jest.fn();
-    const wrapper = mount(<Card post={{ text: 'eita' }} onChange={handleChange} />);
+    const updateColumnPost = jest.fn();
+    const wrapper = mount(<Card post={{ text: 'eita' }} updatePost={updateColumnPost} />);
     wrapper
       .find('[data-automation="editButton"]')
       .first()
