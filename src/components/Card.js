@@ -142,15 +142,15 @@ const Card = props => {
       )}
       
       <CardActions className={classes.footerCardAction}>
-      {!isEditing && (
-      <IconButton
-          className={classes.vote}
-          aria-label="Vote"
-          data-automation="voteButton"
-          onClick={handleVoteCard}
-        >
-          <ThumbUp className={classes.actionIcon} />
-        </IconButton>)}
+        {!isEditing && (
+          <IconButton
+            className={classes.vote}
+            aria-label="Vote"
+            data-automation="voteButton"
+            onClick={handleVoteCard}
+          >
+            <ThumbUp className={classes.actionIcon} />
+          </IconButton>)}
         <Typography data-automation="count" className={classes.countVotes}>{post.vote}</Typography>
       </CardActions>
 
