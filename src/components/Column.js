@@ -42,11 +42,9 @@ const Column = props => {
   const [column, setColumn] = useState(props.column);
   const [isEditingPost, setEditingPost] = useState(false);
   
-  // const handleDeletePost = post => service.remove(post);
-  
   const addCard = () => {
     setEditingPost(true);
-    column.posts.push({ id: uuid(), text: '', date: Date.now() });
+    column.posts.push({ id: uuid(), text: '', date: Date.now(), vote: 0 });
     setColumn(column);
     props.updateColumn(column);
   };
@@ -57,7 +55,7 @@ const Column = props => {
     props.updateColumn(column);
   };
 
-  const updateColumnPost = (editedPost) => {
+  const updateColumnPost = editedPost => {
     const post = column.posts.find(post => post.id === editedPost.id);
     const index = column.posts.indexOf(post);
     column.posts[index] = editedPost;

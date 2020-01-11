@@ -10,6 +10,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Button from '@material-ui/core/Button';
 import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
+import ThumbUp from '@material-ui/icons/ThumbUp';
 import TextField from '@material-ui/core/TextField';
 import { ConfirmationModal } from './ConfirmationModal';
 
@@ -31,35 +32,47 @@ const styles = {
     margin: 0,
     width: '100%',
   },
-  editIcon: {
-    fontSize: 14,
-  },
-  deleteIcon: {
+  actionIcon: {
     fontSize: 14,
   },
   actionButton: {
     fontSize: '.5em',
     minHeight: '0',
   },
+  countVotes: {
+    padding: '12px 12px 12px 9px'
+  },
+  footerCardAction: {
+    float: 'right'
+  }
 };
 
 const Card = props => {
-  const { post, classes, isEditingPost } = props;
-  const [isEditing, setEditing] = useState(isEditingPost);
+  const { classes, isEditingPost } = props;
+
+  const [post, setPost] = useState(props.post);
   const [newText, setNewText] = useState('');
+  const [isEditing, setEditing] = useState(isEditingPost);
 
   const enterEditMode = () => setEditing(true);
-  const handleChange = event => setNewText(event.target.value);
   const handleCancel = () => setEditing(false);
+  const handleChange = event => setNewText(event.target.value);
   const removeCard = async () => {
-    const onConfirm = () => props.deletePost(props.post);
+    const onConfirm = () => props.deletePost(post);
     ConfirmationModal('Are you sure?', 'Delete Card', onConfirm);
+  };
+
+  const handleVoteCard = () => {
+    const updatedPost = { ...post, vote: post.vote + 1 };
+    setPost(updatedPost);
+    props.updatePost(updatedPost);
   };
 
   const handleSave = () => {
     setEditing(false);
-    const post = { ...props.post, ...{ text: newText } };
-    props.updatePost(post);
+    const updatedPost = { ...props.post, ...{ text: newText } };
+    setPost(updatedPost);
+    props.updatePost(updatedPost);
   };
 
   return (
@@ -75,7 +88,7 @@ const Card = props => {
                 data-automation="editButton"
                 onClick={enterEditMode}
               >
-                <Edit className={classes.editIcon} />
+                <Edit className={classes.actionIcon} />
               </IconButton>
 
               <IconButton
@@ -84,7 +97,7 @@ const Card = props => {
                 data-automation="deleteButton"
                 onClick={removeCard}
               >
-                <Delete className={classes.deleteIcon} />
+                <Delete className={classes.actionIcon} />
               </IconButton>
             </Fragment>
           }
@@ -127,7 +140,21 @@ const Card = props => {
           </Button>
         </CardActions>
       )}
-    </MCard>
+      
+      <CardActions className={classes.footerCardAction}>
+      {!isEditing && (
+      <IconButton
+          className={classes.vote}
+          aria-label="Vote"
+          data-automation="voteButton"
+          onClick={handleVoteCard}
+        >
+          <ThumbUp className={classes.actionIcon} />
+        </IconButton>)}
+        <Typography data-automation="count" className={classes.countVotes}>{post.vote}</Typography>
+      </CardActions>
+
+    </MCard >
   );
 };
 
