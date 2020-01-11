@@ -16,6 +16,12 @@ describe('no edit mode', () => {
     expect(wrapper.exists('[data-automation="editButton"]')).toBeTruthy();
     expect(wrapper.exists('[data-automation="deleteButton"]')).toBeTruthy();
   });
+
+  it('should show icon vote and count', () => {
+    const wrapper = mount(<Card post={{ text: 'eita' }} />);
+    expect(wrapper.exists('[data-automation="voteButton"]')).toBeTruthy();
+    expect(wrapper.exists('[data-automation="count"]')).toBeTruthy();
+  });
 });
 
 describe('edit mode', () => {
@@ -90,5 +96,16 @@ describe('edit mode', () => {
       .first()
       .simulate('click');
     expect(wrapper.exists('[data-automation="textField"]')).toBeFalsy();
+  });
+
+  it('should not show icon vote and show count', () => {
+    const wrapper = mount(<Card post={{ text: 'eita' }} />);
+    wrapper
+      .find('[data-automation="editButton"]')
+      .first()
+      .simulate('click');
+
+    expect(wrapper.exists('[data-automation="voteButton"]')).toBeFalsy();
+    expect(wrapper.exists('[data-automation="count"]')).toBeTruthy();
   });
 });

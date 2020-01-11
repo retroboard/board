@@ -39,11 +39,13 @@ const Board = props => {
     [hash]
   );
 
-  const handleChange = event => setNewPost({ text: event.target.value, date: Date.now() });
+  const handleChange = event => setNewPost({ text: event.target.value, date: Date.now(), vote: 0 });
 
   const handlePostUpdate = post => service.add(post);
 
   const handleDeletePost = post => service.remove(post);
+
+  const handleVotePost = post => service.vote(post);
 
   const resetPost = () => setNewPost({ text: '' });
 
@@ -72,7 +74,7 @@ const Board = props => {
       <List className={classes.list}>
         {posts.map(post => (
           <ListItem key={post._id}>
-            <Card post={post} onChange={handlePostUpdate} onDelete={handleDeletePost} />
+            <Card post={post} onChange={handlePostUpdate} onDelete={handleDeletePost} onVote={handleVotePost} />
           </ListItem>
         ))}
       </List>
