@@ -1,6 +1,6 @@
 import Swal from 'sweetalert2';
 
-const ModalConfirmation = async (message, title, onConfirm, ) => {
+const ConfirmationModal = async (message, title, onConfirm, ) => {
   const result = await Swal.fire({
     title: title,
     text: message,
@@ -14,4 +14,4 @@ const ModalConfirmation = async (message, title, onConfirm, ) => {
   }
 };
 
-export { ModalConfirmation };
+export { ConfirmationModal };

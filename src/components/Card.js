@@ -12,7 +12,7 @@ import Edit from '@material-ui/icons/Edit';
 import Delete from '@material-ui/icons/Delete';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import TextField from '@material-ui/core/TextField';
-import { ModalConfirmation } from './Modal';
+import { ConfirmationModal } from './ConfirmationModal';
 
 const styles = {
   container: {
@@ -48,30 +48,31 @@ const styles = {
 };
 
 const Card = props => {
-  const { post, classes } = props;
-  const [isEditing, setEditing] = useState(false);
+  const { classes, isEditingPost } = props;
+
+  const [post, setPost] = useState(props.post);
   const [newText, setNewText] = useState('');
+  const [isEditing, setEditing] = useState(isEditingPost);
 
   const enterEditMode = () => setEditing(true);
-  const handleChange = event => setNewText(event.target.value);
   const handleCancel = () => setEditing(false);
+  const handleChange = event => setNewText(event.target.value);
   const removeCard = async () => {
-    const onConfirm = props.onDelete && (() => props.onDelete(props.post));
-    ModalConfirmation('Are you sure?', 'Delete Card', onConfirm);
+    const onConfirm = () => props.deletePost(post);
+    ConfirmationModal('Are you sure?', 'Delete Card', onConfirm);
   };
 
   const handleVoteCard = () => {
-    if (props.onVote) {
-      props.onVote(props.post);
-    }
+    const updatedPost = { ...post, vote: post.vote + 1 };
+    setPost(updatedPost);
+    props.updatePost(updatedPost);
   };
 
   const handleSave = () => {
     setEditing(false);
-    if (props.onChange) {
-      const post = { ...props.post, ...{ text: newText } };
-      props.onChange(post);
-    }
+    const updatedPost = { ...props.post, ...{ text: newText } };
+    setPost(updatedPost);
+    props.updatePost(updatedPost);
   };
 
   return (
@@ -139,19 +140,17 @@ const Card = props => {
           </Button>
         </CardActions>
       )}
-
+      
       <CardActions className={classes.footerCardAction}>
-        {
-          !isEditing && (<IconButton
+        {!isEditing && (
+          <IconButton
             className={classes.vote}
             aria-label="Vote"
             data-automation="voteButton"
             onClick={handleVoteCard}
           >
             <ThumbUp className={classes.actionIcon} />
-          </IconButton>)
-        }
-
+          </IconButton>)}
         <Typography data-automation="count" className={classes.countVotes}>{post.vote}</Typography>
       </CardActions>
 
@@ -162,9 +161,9 @@ const Card = props => {
 Card.propTypes = {
   post: PropTypes.object.isRequired,
   classes: PropTypes.object,
-  onChange: PropTypes.func,
-  onDelete: PropTypes.func,
-  onVote: PropTypes.func,
+  isEditingPost: PropTypes.bool,
+  deletePost: PropTypes.func,
+  updatePost: PropTypes.func
 };
 
 export default withStyles(styles)(Card);
